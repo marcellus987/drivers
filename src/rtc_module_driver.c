@@ -190,8 +190,6 @@ void rtc_module_init(void) {
 
 
 void setAMPM(uint8_t toPM) {
-	uint8_t temp[sizeof(raw_time_t) + 1];
-
 	/* If not in 24-hour format. */
 	if(!isTwentyFourFormat) {
 		uint8_t regAddress = RTC_MODULE_HOURS_REGISTER_ADDRESS;
@@ -220,7 +218,6 @@ void setAMPM(uint8_t toPM) {
 
 void setTimeFormat(uint8_t twenty_four_hr_format) {
 	uint8_t regAddress = RTC_MODULE_HOURS_REGISTER_ADDRESS;
-	uint8_t temp[sizeof(raw_time_t) + 1];
 
 	raw_time_t rTime = getRawTime();
 
@@ -248,7 +245,6 @@ void setTimeFormat(uint8_t twenty_four_hr_format) {
 
 void setCurrentTime(raw_time_t curTime, uint8_t twenty_four_hr_format, uint8_t isPM) {
 	uint8_t regAddress = RTC_MODULE_SECONDS_REGISTER_ADDRESS;
-	uint8_t temp[sizeof(raw_time_t) + 1];
 
 #ifdef DS1307_MODULE__
 	/* To prevent halting the oscillator on accident. */
@@ -278,7 +274,6 @@ void setCurrentTime(raw_time_t curTime, uint8_t twenty_four_hr_format, uint8_t i
 
 void setCurrentDate(raw_date_t curDate) {
 	uint8_t regAddress = RTC_MODULE_DAY_REGISTER_ADDRESS;
-	uint8_t temp[sizeof(raw_date_t) + 1];
 
 	convertToBCD((uint8_t*)&curDate, sizeof(raw_date_t));
 
@@ -288,43 +283,45 @@ void setCurrentDate(raw_date_t curDate) {
 
 
 /* Fetch the time in decimal. Always returns to time in 24-hour format. */
-current_time_t getCurrentTime(void) {
-	current_time_t c_time = getRawTime();
+void getCurrentTime(current_time_t* curTime) {
+	raw_time_t r_time = getRawTime();
 
 	/* Check hour format. */
-	if(c_time.hours & HOUR_FORTMAT_BIT_Msk) { /* 12-Hour format. */
-		uint8_t isPM = (c_time.hours & AM_PM_BIT_Msk) ? 1 : 0;
+	if(r_time.hours & HOUR_FORTMAT_BIT_Msk) { /* 12-Hour format. */
+		uint8_t isPM = (r_time.hours & AM_PM_BIT_Msk) ? 1 : 0;
 
 		/* Extract the bits for 12-hour format. */
-		c_time.hours &= (0x1FU);
+		r_time.hours &= (0x1FU);
 
 #ifdef DEBUG_MODE__
 		printf("cr_time: 0x%02X raw_hours; 0x%02X raw_minutes; 0x%02X raw_seconds\r\n", c_time.hours, c_time.minutes, c_time.seconds);
 #endif
 
-		convertToDecimal((uint8_t*)&c_time, sizeof(raw_time_t));
+		convertToDecimal((uint8_t*)&r_time, sizeof(raw_time_t));
 
 		/* Force 'hours' portion to 24-hour format. */
 		if(isPM) {
-			if(c_time.hours < 12) {
-				c_time.hours += 12;
+			if(r_time.hours < 12) {
+				r_time.hours += 12;
 			}
 		}
 		else {
-			if(c_time.hours == 12) {
-				c_time.hours = 0;
+			if(r_time.hours == 12) {
+				r_time.hours = 0;
 			}
 		}
 	}
 	else { /* 24-hour format. */
-		convertToDecimal((uint8_t*)&c_time, sizeof(raw_time_t));
+		convertToDecimal((uint8_t*)&r_time, sizeof(raw_time_t));
 	}
 
-	return c_time;
+	curTime->hours = r_time.hours;
+	curTime->minutes = r_time.minutes;
+	curTime->seconds = r_time.seconds;
 } /* End of getCurrentTime(). */
 
-current_date_t getCurrentDate(void) {
-	current_date_t c_date;
+void getCurrentDate(current_date_t* curDate) {
+
 	raw_date_t r_date = getRawDate();
 
 	if(r_date.month & CENTURY_BIT_Msk) {
@@ -335,12 +332,10 @@ current_date_t getCurrentDate(void) {
 
 	convertToDecimal((uint8_t*)&r_date, sizeof(raw_date_t));
 
-	c_date.date = r_date.date;
-	c_date.dayOfWeek = r_date.dayOfWeek;
-	c_date.month = r_date.month;
-	c_date.year = baseCentury + r_date.year;
-
-	return c_date;
+	curDate->date = r_date.date;
+	curDate->dayOfWeek = r_date.dayOfWeek;
+	curDate->month = r_date.month;
+	curDate->year = baseCentury + r_date.year;
 } /* End of getCurrentDate(). */
 
 void printFormattedDateTime(const current_time_t time, const current_date_t date, uint8_t selection) {

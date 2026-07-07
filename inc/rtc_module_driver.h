@@ -59,8 +59,8 @@ typedef struct {
 
 void rtc_module_init(void);
 uint8_t rtc_module_init_status(void);
-current_time_t getCurrentTime(void);
-current_date_t getCurrentDate(void);
+void getCurrentTime(current_time_t* curTime);
+void getCurrentDate(current_date_t* curDate);
 void setCurrentTime(raw_time_t curTime, uint8_t twenty_four_hr_format, uint8_t isPM);
 void setCurrentDate(raw_date_t curDate);
 void setAMPM(uint8_t isPM);
