@@ -73,7 +73,7 @@ void lcd_send(uint8_t data, uint8_t isCommand) {
 
 	/*Note that this is not 1 ns, clocks's minimum is ~62.5ns,
 	*  so this is ~62.5 * 4 = ~250*/
-	delay_us(1);
+	delay_ms(1);
 
 	/* Force E Pin to LOW. */
 	GPIOC->BSRR = E_PIN << 16;
@@ -85,13 +85,13 @@ void send_command(uint8_t command) {
 		delay_ms(2);
 	}
 
-	delay_us(45);
+	delay_ms(1);
 
 }
 
 void send_data(uint8_t data) {
 	lcd_send(data, ~IS_COMMAND);
-	delay_us(45); /* Similar to pulsing E. */
+	delay_ms(1); /* Similar to pulsing E. */
 }
 
 void move_cursor(uint8_t location) {
