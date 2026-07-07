@@ -342,4 +342,17 @@ void printFormattedDateTime(const current_time_t time, const current_date_t date
 
 } /* End of printFormattedDateTime(). */
 
+/* Get the formatted timerstamp: [mm/dd/yyyy] (h-m-s)*/
+void getTimeStamp(char* dest) {
+	current_time_t curTime;
+	current_date_t curDate;
+
+	getCurrentTime(&curTime);
+	getCurrentDate(&curDate);
+
+	sprintf(dest, "[%02d-%02d-%04lu] %02d:%02d:%02d\r\n",
+			curDate.month, curDate.date, curDate.year,
+			curTime.hours, curTime.minutes, curTime.seconds);
+}
+
 /***** API definition END. *****/

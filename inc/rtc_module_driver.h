@@ -65,5 +65,6 @@ void setCurrentTime(raw_time_t curTime, uint8_t twenty_four_hr_format, uint8_t i
 void setCurrentDate(raw_date_t curDate);
 void setAMPM(uint8_t isPM);
 void setTimeFormat(uint8_t twenty_four_hr_format);
+void getTimeStamp(char* dest);
 void printFormattedDateTime(current_time_t time, const current_date_t date, uint8_t selection);
 #endif /* RTC_I2C_DRIVER__ */
