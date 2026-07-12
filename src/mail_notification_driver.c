@@ -10,9 +10,18 @@
 
 
 /* Initialize radio and pins to be used. */
-void send_notification(uint8_t state) {
-	LLCC68_init();
+void send_notification(const uint8_t state) {
+	if(!LLCC68_init_status()) {
+		LLCC68_init();
+	}
 	setTx(&state, sizeof(state));
+}
+
+void receive_notification(uint8_t* state) {
+	if(!LLCC68_init_status()) {
+			LLCC68_init();
+	}
+	setRx(state);
 }
 
 uint8_t verify_mail_presence(void) {

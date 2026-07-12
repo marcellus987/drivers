@@ -350,7 +350,7 @@ void getTimeStamp(char* dest) {
 	getCurrentTime(&curTime);
 	getCurrentDate(&curDate);
 
-	sprintf(dest, "[%02d-%02d-%04lu] %02d:%02d:%02d\r\n",
+	sprintf(dest, "%02d/%02d/%04lu,%02d:%02d:%02d",
 			curDate.month, curDate.date, curDate.year,
 			curTime.hours, curTime.minutes, curTime.seconds);
 }

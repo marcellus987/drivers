@@ -2,9 +2,22 @@
 
 #define READ_CMD_OPCODE 0x1D
 
+
+/* Port A. */
 #define SCLCK_PIN_POS 	(5U)
 #define MISO_PIN_POS	(6U)
 #define MOSI_PIN_POS 	(7U)
+#define NSS_PIN_POS 	(8U)
+
+/* Port B. */
+#define RFSW_V1_PIN_POS 	(0U)
+#define RFSW_V2_PIN_POS 	(1U)
+#define BUSY_PIN_POS 		(5U)
+#define NRESET_PIN_POS		(8U)
+#define IRQ_PIN_POS 		(9U)
+
+/* Port C. */
+#define USER_LED_PIN_POS 	(13U)
 
 
 /***** Global variables START. *****/
@@ -77,7 +90,7 @@ void LLCC68_pin_config(void) {
 	GPIOA->MODER &= ~GPIO_MODER_MODER8_Msk;
 
 	/* Reset mode configurations for port B. */
-	GPIOB->MODER &= ~(GPIO_MODER_MODER0_Msk | GPIO_MODER_MODER1_Msk | GPIO_MODER_MODER5_Msk | GPIO_MODER_MODER6_Msk| GPIO_MODER_MODER8_Msk);
+	GPIOB->MODER &= ~(GPIO_MODER_MODER0_Msk | GPIO_MODER_MODER1_Msk | GPIO_MODER_MODER5_Msk | GPIO_MODER_MODER6_Msk| GPIO_MODER_MODER9_Msk);
 
 	/* Configure output mode for port A pin. */
 	GPIOA->MODER |= GPIO_MODER_MODER8_0;
@@ -153,7 +166,7 @@ void setRx(uint8_t *buffer) {
 } /* End of setRx() */
 
 
-void setTx(uint8_t *buffer, uint32_t len) {
+void setTx(const uint8_t *buffer, uint32_t len) {
 	uint8_t cmd;
 
 	/* 4: Set PA config. */
@@ -230,5 +243,10 @@ void getPacketStatus(uint8_t *result) {
 	spi_receive(result, 4, LLCC68_NOP);
 	slave_deselect(SPI_GPIO_A, NSS_PIN_POS);
 } /* End of getPacketStatus() */
+
+
+uint8_t LLCC68_init_status(void) {
+	return llcc68_initialized;
+}
 
 /***** API definition END. *****/

@@ -248,7 +248,7 @@ CMDRESULT sendCMD58(const CMDRESULT cmd8Status) {
 } /* End of sendCMD58(). */
 
 /* STM32 stores data in little-endian so it must be extracted,
- * in correct order before passing to CMD17. */
+ * in correct order before passing to read or write command. */
 void parseAddress(uint8_t* dest, uint32_t address) {
 	for(int i = 0; i < COMMAND_ARGUMENT_COUNT; ++i) {
 		dest[COMMAND_ARGUMENT_COUNT - i - 1] = address & 0xFF;
@@ -518,7 +518,7 @@ uint8_t sd_busy(void) {
 /* Returns 1 if initialization succeeded. Else, returns 0.*/
 uint8_t sd_init(void) {
 
-	/* Enable clock for GPIOB. */
+	/* Enable clock for GPIOA. */
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
 
 	/* Clear mode bits before selecting modes. */

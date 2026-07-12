@@ -54,7 +54,8 @@ typedef enum {
 
 void wait_for_action_done(uint32_t duration);
 uint8_t verify_mail_presence(void);
-void send_notification(uint8_t state);
+void send_notification(const uint8_t state);
+void receive_notification(uint8_t* state);
 
 void set_standby_mode(void);
 uint8_t check_standby_flag(void);

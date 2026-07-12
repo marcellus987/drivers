@@ -9,7 +9,6 @@
 volatile uint8_t i2c_initialized = 0;
 /* Global vars. END */
 
-
 /***** Helper functions declaration START. *****/
 static void pin_config_i2c(void);
 /***** Helper functions declaration END. *****/
