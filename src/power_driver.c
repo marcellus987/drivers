@@ -35,6 +35,7 @@ void power_standby(void) {
 
 	/* Set PA0 to input. This is the trigger wake up pin. */
 	GPIOA->MODER &= ~(GPIO_MODER_MODER0_Msk);
+	GPIOA->PUPDR |= GPIO_PUPDR_PUPD0_1;
 
 	/* Wait until PA0 is released. */
 	while(GPIOA->IDR & GPIO_IDR_ID0_Msk) { }
