@@ -1,4 +1,5 @@
 #include "power_driver.h"
+#include "systick.h"
 
 static void clear_exti_lines(void) {
 	/* Ensure no EXTI line is pending. */
@@ -39,6 +40,11 @@ void power_standby(void) {
 
 	/* Wait until PA0 is released. */
 	while(GPIOA->IDR & GPIO_IDR_ID0_Msk) { }
+
+	/* Temporary fix for preventing switch debounce.
+	 * Hardware implementation would be better alternative.
+	 * */
+	delay_ms(2000);
 
 	PWR->CSR &= ~PWR_CSR_EWUP_Msk;	/* Disable wake up triggers. */
 
