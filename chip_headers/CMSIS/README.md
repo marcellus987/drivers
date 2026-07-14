@@ -1,2 +1,2 @@
-#Copyright
+# Copyright
 The files in the "Include" directory originate from CMSIS, and the files in the "Device" directory originate from STMicroelectronics. These files remain subject to their original copyright and license terms.
