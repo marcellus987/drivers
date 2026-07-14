@@ -1,0 +1,18 @@
+.*
+*.metadata
+*.project
+*.cproject
+*.o
+*.elf
+*/.settings/*
+Debug/
+Release/
+*.launch
+*.xml
+
+
+# To ensure linker scripts will not be ignored by accident.
+!*.ld
+!*.c
+!.gitignore
+
