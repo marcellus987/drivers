@@ -2,8 +2,8 @@
 
 //#define DEBUG_MODE /* Used for printing debug messages. Comment-out for release.*/
 
-/* Port A pin 8. */
-#define CS_PIN_Pos (8U)
+/* Port A pin 1. */
+#define CS_PIN_Pos (1U)
 #define SD_DUMMY_BYTE (0xFFU)
 
 #define CMD_TEMPLATE (0x40U) /* Command template: 0 1 ... 1 */
@@ -522,9 +522,9 @@ uint8_t sd_init(void) {
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
 
 	/* Clear mode bits before selecting modes. */
-	GPIOA->MODER &= ~(GPIO_MODER_MODER8_Msk);
+	GPIOA->MODER &= ~(0x3U << (CS_PIN_Pos * 2));
 	/* Select output mode. This will be the Chip Select pin. */
-	GPIOA->MODER |= (GPIO_MODER_MODER8_0);
+	GPIOA->MODER |= (1U << (CS_PIN_Pos * 2));
 
 #ifdef DEBUG_MODE
 	printf("sd_init() START...\r\n");
