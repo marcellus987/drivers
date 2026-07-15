@@ -521,10 +521,15 @@ uint8_t sd_init(void) {
 	/* Enable clock for GPIOA. */
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
 
+//	/* Clear mode bits before selecting modes. */
+//	GPIOA->MODER &= ~(0x3U << (CS_PIN_Pos * 2));
+//	/* Select output mode. This will be the Chip Select pin. */
+//	GPIOA->MODER |= (1U << (CS_PIN_Pos * 2));
+
 	/* Clear mode bits before selecting modes. */
-	GPIOA->MODER &= ~(0x3U << (CS_PIN_Pos * 2));
+	GPIOA->MODER &= ~GPIO_MODER_MODER1_Msk;
 	/* Select output mode. This will be the Chip Select pin. */
-	GPIOA->MODER |= (1U << (CS_PIN_Pos * 2));
+	GPIOA->MODER |= GPIO_MODER_MODER1_0;
 
 #ifdef DEBUG_MODE
 	printf("sd_init() START...\r\n");
