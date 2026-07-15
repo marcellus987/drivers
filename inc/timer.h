@@ -1,3 +1,14 @@
+/* Author: Marcellus Von Sacramento
+ *
+ * Purpose: API for TIMER peripheral in STM32F411 MCU.
+ *
+ * Note: This is polling version and does not utilize interrupts.
+ *
+ * Copyright(c).
+ *
+ */
+
+
 #ifndef TIMER_H__
 #define TIMER_H__
 
