@@ -8,6 +8,7 @@
  *
  */
 
+
 #ifndef RTC_DRIVER_H__
 #define RTC_DRIVER_H__
 
@@ -17,7 +18,7 @@
 
 
 void rtc_init(void);
-void setRTC_timer(uint32_t timerDuration);
+void setWakeupTimer(uint32_t timerDuration);
 
 void disable_wakeup_timer(void);
 void clear_rtc_wutf(void);

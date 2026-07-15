@@ -21,7 +21,6 @@
 #ifndef UART_DRIVER_H__
 #define UART_DRIVER_H__
 
-
 #include <stdio.h>
 #include <stdint.h>
 #include "stm32f4xx.h"

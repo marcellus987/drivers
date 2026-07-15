@@ -1,13 +1,8 @@
 /* Author: Marcellus Von Sacramento
  *
- * Purpose: API for utilizing systick feature in STM32F411 MCU.
+ * Purpose: API for systick feature in STM32F411 MCU.
  *
  * Note: This is polling version and does not utilize interrupts.
- *
- * Requirements:
- * Pins used: PA5 = SCLK.
- * 			  PA6 = MISO.
- * 			  PA7 = MOSI.
  *
  * Copyright(c).
  *

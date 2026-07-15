@@ -18,8 +18,6 @@
 #ifndef HUMIDITY_SENSOR_H__
 #define HUMIDITY_SENSOR_H__
 
-
-
 #include <stdint.h>
 #include <stdio.h>
 #include "stm32f4xx.h"

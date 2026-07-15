@@ -17,6 +17,7 @@
 
 #ifndef RTC_I2C_DRIVER__
 #define RTC_I2C_DRIVER__
+
 #include "stm32f4xx.h"
 #include "i2c.h"
 

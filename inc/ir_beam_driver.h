@@ -13,14 +13,13 @@
  *
  */
 
+
 #ifndef IR_BEAM_DRIVER_H__
 #define IR_BEAM_DRIVER_H__
 
 #include <stdio.h>
 #include <stdint.h>
 #include "stm32f4xx.h"
-
-
 
 void ir_beam_init(void);
 uint8_t ir_beam_init_status(void); /* To be implemented. */

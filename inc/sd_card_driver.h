@@ -51,9 +51,6 @@
  */
 
 
-
-
-
 #ifndef SD_CARD_DRIVER_H__
 #define SD_CARD_DRIVER_H__
 
@@ -64,11 +61,11 @@
 #include "spi.h"
 #include "systick.h"
 
-
 uint8_t sd_init(void);
 uint8_t sd_read(uint32_t sector, uint8_t* buffer);
 uint8_t sd_write(uint32_t sector, const uint8_t* buffer);
-
+//uint8_t sd_read_f(uint32_t sector, uint8_t* buffer);
+//uint8_t sd_write_f(uint32_t sector, const uint8_t* buffer);
 uint8_t get_SDstatus(void);
 uint8_t sd_busy(void);
 

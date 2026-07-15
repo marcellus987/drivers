@@ -9,8 +9,10 @@
  *
  */
 
+
 #ifndef MAIL_NOTIFICATION_DRIVER_H__
 #define MAIL_NOTIFICATION_DRIVER_H__
+
 #include <stdint.h>
 #include "stm32f4xx.h"
 
