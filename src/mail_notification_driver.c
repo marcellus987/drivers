@@ -45,12 +45,12 @@ uint8_t verify_mail_presence(void) {
  * or mail being taken out of the mailbox. */
 void wait_for_action_done(uint32_t duration) {
 	rtc_init();
-	setRTC_timer(duration);
+	setWakeupTimer(duration);
 	power_deepsleep();
 }
 
 void set_standby_mode(void) {
-	power_standby();
+	power_standby(1);
 }
 
 uint8_t check_standby_flag(void) {
@@ -60,7 +60,6 @@ uint8_t check_standby_flag(void) {
 	RCC->APB1ENR &= ~RCC_APB1ENR_PWREN;
 	return (standbyFlag);
 }
-
 
 void init_debug_mode(void) {
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN; /* For on-board LED. */
@@ -102,7 +101,6 @@ void received_led_init(void) {
 	GPIOB->MODER |= GPIO_MODER_MODER12_0;
 }
 
-
 void received_led_on(void) {
 	GPIOB->BSRR |= GPIO_BSRR_BS12;
 }
@@ -112,6 +110,3 @@ void received_led_off(void) {
 }
 
 #endif /* RECEIVER_DEVICE__. */
-
-
-
