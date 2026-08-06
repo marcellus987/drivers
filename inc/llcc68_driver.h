@@ -20,8 +20,8 @@
  *			PB0 = RFSW_V1_PIN_POS
  *			PB1 = RFSW_V2_PIN_POS
  *			PB5 = BUSY_PIN_POS
- *			PB6 = IRQ_PIN_POS
  *			PB8 = NRESET_PIN_POS
+ *			PB9 = IRQ_PIN_POS
  *	 	Port C.
  *			PC13 = USER_LED_PIN_POS
  *

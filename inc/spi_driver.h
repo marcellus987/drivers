@@ -31,7 +31,7 @@ typedef struct {
  * 		  instance points to nothing (NULL); therefore, undefined.
  * Param: spi instance, SPI address.
  * *****************************************************************/
-uint8_t xSpiInit(spi_instance_t *spi_instance, SPI_TypeDef *spix);
+uint8_t xSpiInit(spi_instance_t *spiInstance, SPI_TypeDef *spix);
 
 
 /*******************************************************************
@@ -41,7 +41,7 @@ uint8_t xSpiInit(spi_instance_t *spi_instance, SPI_TypeDef *spix);
  * 		  only becomes disabled but registers contents are preserved.
  * Param: spi instance, SPI RCC clock disable flag.
  * *****************************************************************/
-void vDisableSpi(spi_instance_t *spi_instance, uint8_t disable_clock);
+void vDisableSpi(spi_instance_t *spiInstance, uint8_t disable_clock);
 
 					/*******************************************************************
 					 * Usage: SPI must be initialized. Automatically disables the SPI for
@@ -49,7 +49,7 @@ void vDisableSpi(spi_instance_t *spi_instance, uint8_t disable_clock);
 					 * 		  flag passed to this function.
 					 * Param: spi instance, desired baudrate, enable flag.
 					 * *****************************************************************/
-void vSetBaudrate(spi_instance_t *spi_instance, uint8_t bd, uint8_t keepEnabled);
+void vSetBaudrate(spi_instance_t *spiInstance, uint8_t bd, uint8_t keepEnabled);
 
 
 /*******************************************************************

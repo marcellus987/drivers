@@ -85,7 +85,7 @@ void lcd_init(void) {
 	send_command(DISPLAY_CURSOR_OFF);
 }
 
-void cls(void) {
+void lcd_cls(void) {
 	send_command(CLEAR_DISPLAY);
 }
 

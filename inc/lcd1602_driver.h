@@ -29,6 +29,6 @@ void send_command(uint8_t command);
 void send_data(uint8_t data);
 void lcd_init(void);
 void move_cursor(uint8_t location);
-void cls(void);
+void lcd_cls(void);
 
 #endif /* LCD_H__ */

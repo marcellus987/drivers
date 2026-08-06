@@ -52,9 +52,9 @@ static uint8_t isValidSpi(SPI_TypeDef *spix) {
 
 
 /***** API definition START. *****/
-void vDisableSpi(spi_instance_t *spi_instance, uint8_t disable_clock) {
-	if(spi_instance->initialized) {
-		SPI_TypeDef *spix = spi_instance->spi;
+void vDisableSpi(spi_instance_t *spiInstance, uint8_t disable_clock) {
+	if(spiInstance->initialized) {
+		SPI_TypeDef *spix = spiInstance->spi;
 
 		/* Poll these bits to ensure proper disabling of SPI.*/
 		while(spix->SR & SPI_SR_RXNE) {
@@ -63,7 +63,7 @@ void vDisableSpi(spi_instance_t *spi_instance, uint8_t disable_clock) {
 		while(!(spix->SR & SPI_SR_TXE)){}
 		while(spix->SR & SPI_SR_BSY) {}
 		spix->CR1 &= ~(SPI_CR1_SPE);
-		spi_instance->enabled = 0;
+		spiInstance->enabled = 0;
 
 		/* Disable clock for SPIx, if necessary. Makes SPI uninitialized. */
 		if(disable_clock) {
@@ -82,12 +82,12 @@ void vDisableSpi(spi_instance_t *spi_instance, uint8_t disable_clock) {
 			else {
 				RCC->APB1ENR &= ~RCC_APB1ENR_SPI3EN;
 			}
-			spi_instance->initialized = 0;
+			spiInstance->initialized = 0;
 		}
 	}
 } /* End of disable_spi().*/
 
-uint8_t xSpiInit(spi_instance_t *spi_instance, SPI_TypeDef *spix) {
+uint8_t xSpiInit(spi_instance_t *spiInstance, SPI_TypeDef *spix) {
 	/* Configure pins to be used.
 	 * Hard coded for now.
 	 * */
@@ -110,7 +110,7 @@ uint8_t xSpiInit(spi_instance_t *spi_instance, SPI_TypeDef *spix) {
 		RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
 	}
 	else { /***** Invalid SPI. *****/
-		spi_instance->spi = NULL;
+		spiInstance->spi = NULL;
 		return 0;
 	}
 
@@ -149,22 +149,22 @@ uint8_t xSpiInit(spi_instance_t *spi_instance, SPI_TypeDef *spix) {
 	spix->CR2 = 0;
 
 	/* Configure instance. */
-	spi_instance->spi = spix;
-	spi_instance->initialized = 1;
-	spi_instance->enabled = 1;
+	spiInstance->spi = spix;
+	spiInstance->initialized = 1;
+	spiInstance->enabled = 1;
 } /* End of spi_init(). */
 
-void vSetBaudrate(spi_instance_t *spi_instance, uint8_t bd, uint8_t keepEnabled) {
-	if(spi_instance->initialized) {
-		SPI_TypeDef *spix = spi_instance->spi;
+void vSetBaudrate(spi_instance_t *spiInstance, uint8_t bd, uint8_t keepEnabled) {
+	if(spiInstance->initialized) {
+		SPI_TypeDef *spix = spiInstance->spi;
 
-		if(spi_instance->enabled) {
+		if(spiInstance->enabled) {
 			/* Poll these bits to ensure proper disabling of SPI.*/
 			while(spix->SR & SPI_SR_RXNE) {}
 			while(!(spix->SR & SPI_SR_TXE)){}
 			while(spix->SR & SPI_SR_BSY) {}
 			spix->CR1 &= ~(SPI_CR1_SPE);
-			spi_instance->enabled = 0;
+			spiInstance->enabled = 0;
 		}
 
 		/* Clear Baud rate control bits configuration. */
@@ -175,7 +175,7 @@ void vSetBaudrate(spi_instance_t *spi_instance, uint8_t bd, uint8_t keepEnabled)
 		if(keepEnabled) {
 			/* Turn SPI on. */
 			spix->CR1 |= SPI_CR1_SPE;
-			spi_instance->enabled = 1;
+			spiInstance->enabled = 1;
 		}
 	}
 } /* End of set_baudrate(). */

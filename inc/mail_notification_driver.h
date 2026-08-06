@@ -56,8 +56,10 @@ typedef enum {
 
 void wait_for_action_done(uint32_t duration);
 uint8_t verify_mail_presence(void);
-void send_notification(const uint8_t state);
+void send_notification(const uint8_t* state);
 void receive_notification(uint8_t* state);
+void send_mail_present(void);
+void send_mail_absent(void);
 
 void set_standby_mode(void);
 uint8_t check_standby_flag(void);
@@ -68,9 +70,11 @@ void debug_led_on(void);
 void debug_led_off(void);
 void toggle_led(void);
 
-void received_led_init(void);
-void received_led_on(void);
-void received_led_off(void);
-
+void configure_indicator_led(void);
+void mail_present_led_on(void);
+void mail_absent_led_on(void);
+void sd_error_led_on(void);
+void sd_ok_led_on(void);
+void led_indicator_off(void);
 
 #endif /* MAIL_NOTIFICATION_DRIVER_H__ */

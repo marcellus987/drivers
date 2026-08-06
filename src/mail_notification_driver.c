@@ -8,13 +8,20 @@
 #define TRANSMITTER_DEVICE__
 #define RECEIVER_DEVICE__
 
+#define MAIL_PRESENT_LED 12
+#define MAIL_ABSENT_LED 13
+#define SD_ERROR_LED 14
+#define SD_OK_LED 15
+
+
+
 
 /* Initialize radio and pins to be used. */
-void send_notification(const uint8_t state) {
+void send_notification(const uint8_t* state) {
 	if(!LLCC68_init_status()) {
 		LLCC68_init();
 	}
-	setTx(&state, sizeof(state));
+	setTx(state, sizeof(*state));
 }
 
 void receive_notification(uint8_t* state) {
@@ -23,6 +30,17 @@ void receive_notification(uint8_t* state) {
 	}
 	setRx(state);
 }
+
+void send_mail_present(void) {
+	uint8_t temp = 0x01U;
+	send_notification(&temp);
+}
+
+void send_mail_abesent(void) {
+	uint8_t temp = 0x00U;
+	send_notification(&temp);
+}
+
 
 uint8_t verify_mail_presence(void) {
 	uint8_t sensor_status;
@@ -92,21 +110,34 @@ void reset_low_power_mode_flags(void) {
 
 #ifdef RECEIVER_DEVICE__
 
-void received_led_init(void) {
+void configure_indicator_led(void) {
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN; /* For on-board LED. */
 
 	/* Reset mode configurations for port B. */
-	GPIOB->MODER &= ~(GPIO_MODER_MODER12_Msk);
+	GPIOB->MODER &= ~(GPIO_MODER_MODER12_Msk | GPIO_MODER_MODER13_Msk |GPIO_MODER_MODER14_Msk | GPIO_MODER_MODER15_Msk);
 	/* Configure output mode for port B LED pin. */
-	GPIOB->MODER |= GPIO_MODER_MODER12_0;
+	GPIOB->MODER |= GPIO_MODER_MODER12_0 | GPIO_MODER_MODER13_0 | GPIO_MODER_MODER14_0 | GPIO_MODER_MODER15_0;
 }
 
-void received_led_on(void) {
-	GPIOB->BSRR |= GPIO_BSRR_BS12;
+//#define MAIL_PRESENT_LED 12
+//#define MAIL_ABSENT_LED 13
+//#define SD_ERROR_LED 14
+//#define SD_OK_LED 15
+void mail_present_led_on(void) {
+	GPIOB->BSRR |= (1U << MAIL_PRESENT_LED) | (1U << (MAIL_ABSENT_LED + 16));
+}
+void mail_absent_led_on(void) {
+	GPIOB->BSRR |= (1U << (MAIL_PRESENT_LED + 16)) | (1U << MAIL_ABSENT_LED);
+}
+void sd_error_led_on(void) {
+	GPIOB->BSRR |= (1U << SD_ERROR_LED) | (1U << (SD_OK_LED + 16));
+}
+void sd_ok_led_on(void) {
+	GPIOB->BSRR |= (1U << (SD_ERROR_LED + 16)) | (1U << SD_OK_LED);
 }
 
-void received_led_off(void) {
-	GPIOB->BSRR |= GPIO_BSRR_BR12;
+void led_indicator_off(void) {
+	GPIOB->BSRR |= (1U << (SD_ERROR_LED + 16)) | (1U << (SD_OK_LED + 16)) | (1U << (MAIL_PRESENT_LED + 16)) | (1U << (MAIL_ABSENT_LED + 16));
 }
 
 #endif /* RECEIVER_DEVICE__. */
