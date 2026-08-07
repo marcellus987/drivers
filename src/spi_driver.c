@@ -1,54 +1,38 @@
 #include "spi_driver.h"
 #include <stdio.h>
 
-/***** Helper functions declaration START. *****/
-static void spi_pin_config(void);
-/***** Helper functions declaration END. *****/
-
-/***** Helper functions definition START. *****/
-static void spi_pin_config(void) {
-	/* Enable clock for GPIOA. */
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-
-	/* Clear mode bits before selecting modes. */
-	GPIOA->MODER &= ~(GPIO_MODER_MODER5_Msk);
-	GPIOA->MODER &= ~(GPIO_MODER_MODER6_Msk);
-	GPIOA->MODER &= ~(GPIO_MODER_MODER7_Msk);
-
-	/* Set mode to alternate function for PA5 to PA7. */
-	GPIOA->MODER |= GPIO_MODER_MODE5_1;
-	GPIOA->MODER |= GPIO_MODER_MODE6_1;
-	GPIOA->MODER |= GPIO_MODER_MODE7_1;
-
-
-	/* Clear AF selection before selecting new AF. */
-	GPIOA->AFR[0] &= ~(GPIO_AFRL_AFSEL5_Msk);
-	GPIOA->AFR[0] &= ~(GPIO_AFRL_AFSEL6_Msk);
-	GPIOA->AFR[0] &= ~(GPIO_AFRL_AFSEL7_Msk);
-
-
-	/* Select alternate functions to SPI1 for each SPI pin. */
-	GPIOA->AFR[0] |= (5U << GPIO_AFRL_AFSEL5_Pos);
-	GPIOA->AFR[0] |= (5U << GPIO_AFRL_AFSEL6_Pos);
-	GPIOA->AFR[0] |= (5U << GPIO_AFRL_AFSEL7_Pos);
-} /* End of spi_pin_config(). */
-
-
-/* Unused for now.
-static uint8_t isValidSpi(SPI_TypeDef *spix) {
-	switch((uint32_t)spix) {
-	case((uint32_t)SPI1):
-	case((uint32_t)SPI2):
-	case((uint32_t)SPI3):
-	case((uint32_t)SPI4):
-	case((uint32_t)SPI5):
-		return  1;
-	default:
-		return 0;
-	}
-}
-*/
-/***** Helper functions definition END. *****/
+///***** Helper functions declaration START. *****/
+//static void spi_pin_config(void);
+///***** Helper functions declaration END. *****/
+//
+///***** Helper functions definition START. *****/
+//static void spi_pin_config(void) {
+//	/* Enable clock for GPIOA. */
+//	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+//
+//	/* Clear mode bits before selecting modes. */
+//	GPIOA->MODER &= ~(GPIO_MODER_MODER5_Msk);
+//	GPIOA->MODER &= ~(GPIO_MODER_MODER6_Msk);
+//	GPIOA->MODER &= ~(GPIO_MODER_MODER7_Msk);
+//
+//	/* Set mode to alternate function for PA5 to PA7. */
+//	GPIOA->MODER |= GPIO_MODER_MODE5_1;
+//	GPIOA->MODER |= GPIO_MODER_MODE6_1;
+//	GPIOA->MODER |= GPIO_MODER_MODE7_1;
+//
+//
+//	/* Clear AF selection before selecting new AF. */
+//	GPIOA->AFR[0] &= ~(GPIO_AFRL_AFSEL5_Msk);
+//	GPIOA->AFR[0] &= ~(GPIO_AFRL_AFSEL6_Msk);
+//	GPIOA->AFR[0] &= ~(GPIO_AFRL_AFSEL7_Msk);
+//
+//
+//	/* Select alternate functions to SPI1 for each SPI pin. */
+//	GPIOA->AFR[0] |= (5U << GPIO_AFRL_AFSEL5_Pos);
+//	GPIOA->AFR[0] |= (5U << GPIO_AFRL_AFSEL6_Pos);
+//	GPIOA->AFR[0] |= (5U << GPIO_AFRL_AFSEL7_Pos);
+//} /* End of spi_pin_config(). */
+///***** Helper functions definition END. *****/
 
 
 /***** API definition START. *****/
@@ -88,10 +72,10 @@ void vDisableSpi(spi_instance_t *spiInstance, uint8_t disable_clock) {
 } /* End of disable_spi().*/
 
 uint8_t xSpiInit(spi_instance_t *spiInstance, SPI_TypeDef *spix) {
-	/* Configure pins to be used.
-	 * Hard coded for now.
-	 * */
-	spi_pin_config();
+//	/* Configure pins to be used.
+//	 * Hard coded for now.
+//	 * */
+//	spi_pin_config();
 
 	/* Enable clock for SPIx. */
 	if(spix == SPI1) {
