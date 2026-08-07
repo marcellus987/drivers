@@ -136,6 +136,8 @@ uint8_t xSpiInit(spi_instance_t *spiInstance, SPI_TypeDef *spix) {
 	spiInstance->spi = spix;
 	spiInstance->initialized = 1;
 	spiInstance->enabled = 1;
+
+	return 1;
 } /* End of spi_init(). */
 
 void vSetBaudrate(spi_instance_t *spiInstance, uint8_t bd, uint8_t keepEnabled) {
