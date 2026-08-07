@@ -25,7 +25,7 @@
 
 void i2c_init(void);
 uint8_t i2c_init_status(void);
-uint8_t i2c_controller_transmit(const uint8_t address, const uint8_t* dataBuff, const int bytesToRead);
+uint8_t i2c_controller_transmit(const uint8_t address, const uint8_t* dataBuff, const int bytesToSend);
 uint8_t i2c_controller_receive(const uint8_t address, uint8_t* dataBuff, const int bytesToRead);
 
 #endif /* I2C_H__ */
