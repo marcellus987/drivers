@@ -27,9 +27,10 @@ typedef struct {
 /***** API declaration END. *****/
 
 /*******************************************************************
- * Usage: Initializes SPI instance upon success. Otherwise, it does
- * 		  instance points to nothing (NULL); therefore, undefined.
- * Param: spi instance, SPI address.
+ * Usage: Initializes SPI instance upon success. Otherwise, instance
+ * 		  points to nothing (NULL); therefore, undefined.
+ * Param: spi instance, SPI peripheral address.
+ * RetVal: 1 on success. 0 on failure.
  * *****************************************************************/
 uint8_t xSpiInit(spi_instance_t *spiInstance, SPI_TypeDef *spix);
 
@@ -39,6 +40,7 @@ uint8_t xSpiInit(spi_instance_t *spiInstance, SPI_TypeDef *spix);
  * 		  is set then SPI becomes uninitialized. Otherwise, it
  * 		  only becomes disabled but registers contents are preserved.
  * Param: spi instance, SPI RCC clock disable flag.
+ * RetVal: None.
  * *****************************************************************/
 void vDisableSpi(spi_instance_t *spiInstance, uint8_t disable_clock);
 
@@ -47,6 +49,7 @@ void vDisableSpi(spi_instance_t *spiInstance, uint8_t disable_clock);
  * 		  baudrate re-configuraton. Enables it depending on the enable
  * 		  flag passed to this function.
  * Param: spi instance, desired baudrate, enable flag.
+ * RetVal: None.
  * *****************************************************************/
 void vSetBaudrate(spi_instance_t *spiInstance, uint8_t bd, uint8_t keepEnabled);
 
@@ -54,6 +57,7 @@ void vSetBaudrate(spi_instance_t *spiInstance, uint8_t bd, uint8_t keepEnabled);
 /*********************************************************************
  * Usage: SPI must be initialized. Transmit data to SPI slave device.
  * Param: SPIx used, data to be sent, size of data to be sent.
+ * RetVal: None.
  * *******************************************************************/
 void vSpiTransmit(SPI_TypeDef *spix, const uint8_t *data, uint32_t size);
 
@@ -61,6 +65,7 @@ void vSpiTransmit(SPI_TypeDef *spix, const uint8_t *data, uint32_t size);
  * Usage: SPI must be initialized. Receive data from SPI slave device.
  * Param: SPIx used, data buffer, size of data to be received, dummy byte
  * 		  since some SPI device requires certain dummy byte during reception.
+ * RetVal: None.
  * **************************************************************************/
 void vSpiReceive(SPI_TypeDef *spix, uint8_t *buffer, uint32_t size, uint8_t dummyByte);
 
@@ -73,6 +78,7 @@ void vSlaveSelect(GPIO_TypeDef *gpiox, uint8_t pin_pos);
 /**********************************************************************
  * Usage: SPI must be initialized. Selecting slave. Pulls CS line high.
  * Param: GPIO port, CS pin position.
+ * RetVal: None.
  * ********************************************************************/
 void vSlaveDeselect(GPIO_TypeDef *gpiox, uint8_t pin_pos);
 /***** API declaration END. *****/
